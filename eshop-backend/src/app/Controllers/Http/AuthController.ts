@@ -5,67 +5,30 @@ import CreateUserRequestValidator from "App/Validators/CreateUserRequestValidato
 
 export default class AuthController {
 
-  public async loginAdmin({ auth, request, response }) {
+  public async login({ auth, request, response }) {
 
     const email = request.input('email')
     const password = request.input('password')
-    console.log(email, password)
     const user = await User.query()
       .where('email', email)
       .first()
 
-    /*if (!user || !(await Hash.verify(user.password, password))) {
+    try {
+      const token = await auth.use('api').attempt(email, password)
+      return { user, token:token.token }
+    } catch {
       return response.unauthorized('Invalid credentials')
-    }*/
-    if (user) {
-      const token = await auth.use('api').generate(user)
-      return {
-        token: token.token,
-        user
-      }
-    } else {
-      return response.unauthorized('Email or password incorrect')
     }
-
-
 
   }
 
-
-
-  public async loginUser({ auth, request, response }) {
-    const email = request.input('email')
-    const password = request.input('password')
-    if (!(email && password)) {
-      return response.unauthorized('Input all the required parameter')
-    }
-    const user = await User.query()
-      .where('email', email)
-      .where('isAdmin', false)
-      .first()
-
-    /*if (!user || !(await Hash.verify(user.password, password))) {
-      return response.unauthorized('Invalid credentials')
-    }*/
-    if (user) {
-      const token = await auth.use('api').generate(user)
-      return {
-        token: token.token,
-        user
-      }
-    } else {
-      return response.unauthorized('Email or password incorrect')
-    }
-
-
-  }
 
 
   public async register({ auth, request, response }: HttpContextContract) {
 
     try {
       const data = await request.validate(CreateUserRequestValidator)
-      const user = new User().fill(data)
+      const user = new User().fill({ ...data, password: await Hash.make(data.password) })
       const userInfo = await user.save();
       const token = await auth.use('api').generate(userInfo)
       return {

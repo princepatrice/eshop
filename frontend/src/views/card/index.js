@@ -86,7 +86,7 @@ function CardItems() {
                                                 <td>{cardItem?.name}</td>
                                                 <td>{cardItem?.price} $</td>
                                                 <td>{cardItem?.quantity}</td>
-                                                <td>{cardItem?.quantity * cardItem?.price}</td>
+                                                <td>{cardItem?.quantity * cardItem?.price} $</td>
                                                 <td ><NavLink href={`/admin/product/${cardItem?.id}`}><i className="fa fa-eye"></i></NavLink></td>
                                                 <td><NavLink onClick={() => deleteUserItem(cardItem?.id)}><i className="fa fa-trash"></i></NavLink></td>
                                             </tr>

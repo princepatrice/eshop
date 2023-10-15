@@ -1,5 +1,5 @@
 export const loginRequest = (data,callback) => {
-    const url = process.env.REACT_APP_API_URL + "auth/admin/login"
+    const url = process.env.REACT_APP_API_URL + "auth/login"
     const requestParam = {
         method: "POST",
         headers: {

@@ -25,7 +25,6 @@ export default class extends BaseSchema {
       .onDelete('CASCADE')
       table.string('shipping_address', 255)
       table.string('manufacture_address', 255)
-      table.string('card', 255)
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

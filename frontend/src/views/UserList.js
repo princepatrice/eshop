@@ -22,20 +22,20 @@ function UserList() {
 
   const getFilteredUser = (page) => {
     getUserListRequest((data) => {
-      setMeta(data.data.meta)
-      setUserList(data.data.data)
+      setMeta(data?.data?.meta)
+      setUserList(data?.data?.data)
     }, currentUser.token, page, search)
   }
 
   const getNextPage = () => {
-    if (meta.current_page < meta.last_page) {
-      getFilteredUser(meta.current_page + 1)
+    if (meta?.current_page < meta?.last_page) {
+      getFilteredUser(meta?.current_page + 1)
     }
   }
 
   const getPrevPage = () => {
-    if (meta.current_page > 1) {
-      getFilteredUser(meta.current_page - 1)
+    if (meta?.current_page > 1) {
+      getFilteredUser(meta?.current_page - 1)
     }
   }
 
@@ -79,7 +79,7 @@ function UserList() {
                     </tr>
                   </thead>
                   <tbody>
-                    {userList.map((user, key) =>
+                    {userList?.map((user, key) =>
                       <tr key={user?.id}>
                         <td >{key + 1}</td>
                         <td>{user?.first_name} {user?.last_name}</td>

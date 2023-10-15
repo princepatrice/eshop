@@ -43,9 +43,8 @@ Route.group(() => {
 
     }).middleware('auth:api')
     
-    Route.post('auth/login', 'AuthController.loginUser')
+    Route.post('auth/login', 'AuthController.login')
     Route.post('auth/register', 'AuthController.register')
-    Route.post('auth/admin/login', 'AuthController.loginAdmin')
     Route.post('auth/forgot-password', 'AuthController.forgotPassword')
     Route.resource('items', 'ItemsController').apiOnly().only(["index","show"]);
 

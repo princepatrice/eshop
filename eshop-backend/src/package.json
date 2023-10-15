@@ -70,5 +70,13 @@
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.21",
     "uuid": "^8.3.2"
-  }
+  },
+  "description": "Eshop Api Assesment",
+  "keywords": [
+    "Eshop",
+    "Api",
+    "Catepillar"
+  ],
+  "author": "Koya Dzogbema",
+  "license": "ISC"
 }

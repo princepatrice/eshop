@@ -22,20 +22,20 @@ function ProductsList() {
 
   const getFilteredUser = (page) => {
     getProductsListRequest((data) => {
-      setMeta(data.data.meta)
-      setProductsList(data.data.data)
+      setMeta(data.data?.meta)
+      setProductsList(data.data?.data)
     }, page, search)
   }
 
   const getNextPage = () => {
-    if (meta.current_page < meta.last_page) {
-      getFilteredUser(meta.current_page + 1)
+    if (meta?.current_page < meta?.last_page) {
+      getFilteredUser(meta?.current_page + 1)
     }
   }
 
   const getPrevPage = () => {
-    if (meta.current_page > 1) {
-      getFilteredUser(meta.current_page - 1)
+    if (meta?.current_page > 1) {
+      getFilteredUser(meta?.current_page - 1)
     }
   }
 

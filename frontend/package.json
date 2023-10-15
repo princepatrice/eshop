@@ -1,6 +1,14 @@
 {
-  "name": "light-bootstrap-dashboard-react",
+  "name": "eshop-frontend",
   "version": "2.0.1",
+  "description": "Eshop Frontend Assesment",
+  "keywords": [
+    "Eshop",
+    "React",
+    "Catepillar"
+  ],
+  "author": "Koya Dzogbema",
+  "license": "ISC",
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.2",
     "@reduxjs/toolkit": "^1.9.7",

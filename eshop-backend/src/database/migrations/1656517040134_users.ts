@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.string('first_name', 255);
       table.boolean('is_admin').defaultTo(false);
       table.string('last_name', 255);
-      table.string('password', 60).notNullable();
+      table.string('password', 255).notNullable();
       table.string('phone_number', 20);
       table.string('email', 30).unique().notNullable();
       table.string('shipping_address', 255);
