@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+ dev-strongers-mariadb:
+    container_name: dev-strongers-mariadb
+    image: mariadb:10.6
+    restart: unless-stopped
+    command: ['mysqld', '--sql_mode=']
+    environment:
+      - MARIADB_ROOT_PASSWORD=strongersMysql@ADMINPWD
+      - MARIADB_DATABASE=strongers
+      - MARIADB_USER=strongers
+      - MARIADB_PASSWORD=strongers@PWD
+    ports:
+      - 3307:3306
+    volumes:
+    - .:/app
+    - dev-strongers-mariadb-volume:/var/lib/mysql:Z
+ dev-strongers-api:
+    container_name: dev-strongers-api
+    image: node:lts-gallium
+    restart: unless-stopped
+    working_dir: /app
+    env_file: .env
+    expose:
+      - ${DEPLOY_PORT}
+    ports:
+      - ${DEPLOY_PORT}:${PORT}
+    links:
+      - dev-strongers-mariadb
+    depends_on:
+      - dev-strongers-mariadb
+    volumes:
+      - ./src:/app:Z
+    command: bash -c "yarn && node ace serve --watch"
+volumes: 
+  dev-strongers-mariadb-volume:
