@@ -23,6 +23,7 @@ import ProductsList from "views/ProductList";
 import ProductInfo from "views/item";
 import MyPurchases from "views/purchases/MyPurchases";
 import CardItems from "views/card";
+import MyPurchasesLot from "views/purchases/MyPurchasesLot";
 
 const dashboardRoutes = [
   {
@@ -67,7 +68,21 @@ const dashboardRoutes = [
     layout: "/admin",
     visible:true
   },
-
+  {
+    path: "/purchase-search-lot",
+    name: "Purchase Search",
+    icon: "nc-icon fa fa-search",
+    component: MyPurchasesLot,
+    layout: "/admin",
+    visible:true
+  },  {
+    path: "/purchase-invoice/:id",
+    name: "Purchase Invoice",
+    icon: "nc-icon nc-notes",
+    component: MyPurchasesLot,
+    layout: "/admin",
+    visible:false
+  },
 
 ];
 

@@ -28,8 +28,9 @@ function Header() {
   const history = useHistory();
   const dispatch = useDispatch()
   const location = useLocation();
-  const currentUser = useSelector((state)=> state.user.user)
-  const logoutAction = () =>{
+  const currentUser = useSelector((state) => state.user.user)
+  const cardItems = useSelector((state) => state.card.cardItems[currentUser.id])
+  const logoutAction = () => {
     dispatch(logout())
     history.push("/login");
   }
@@ -77,41 +78,42 @@ function Header() {
           <span className="navbar-toggler-bar burger-lines"></span>
           <span className="navbar-toggler-bar burger-lines"></span>
         </Navbar.Toggle>
-       
+
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="nav mr-auto" navbar>
           </Nav>
-          
+
           <Nav className="ml-auto" navbar>
-          <Nav.Item>
-                <span className="d-lg-block p-3">{currentUser?.first_name} {currentUser?.last_name}</span>
+            <Nav.Item>
+              <span className="d-lg-block p-3">{currentUser?.first_name} {currentUser?.last_name}</span>
             </Nav.Item>
             <Nav.Item>
-            <Dropdown as={Nav.Item}>
-              <Dropdown.Toggle
-                as={Nav.Link}
-                data-toggle="dropdown"
-                id="dropdown-67443507"
-                variant="default"
-                className="m-0"
-              >
-                <i className="nc-icon nc-bag"></i>
-                <span className="notification">5</span>
-                <span className="d-lg-none ml-1">Cart</span>
-              </Dropdown.Toggle>
-            
-            </Dropdown>
+              <Dropdown as={Nav.Item}>
+                <Dropdown.Toggle
+                  as={Nav.Link}
+                  data-toggle="dropdown"
+                  id="dropdown-67443507"
+                  variant="default"
+                  className="m-0"
+                  onClick={()=> history.push("/admin/cart")}
+                >
+                  <i className="nc-icon nc-bag"></i>
+                  {cardItems.length ? <span className="notification">{cardItems.length}</span>:''}
+                  <span className="d-lg-none ml-1">Cart</span>
+                </Dropdown.Toggle>
+
+              </Dropdown>
             </Nav.Item>
           </Nav>
           <Nav.Item>
-              <Nav.Link
-                className="m-0"
-          
-                onClick={(e) => logoutAction()}
-              >
-                <span className="d-lg-block">Logout</span>
-              </Nav.Link>
-            </Nav.Item>
+            <Nav.Link
+              className="m-0"
+
+              onClick={(e) => logoutAction()}
+            >
+              <span className="d-lg-block">Logout</span>
+            </Nav.Link>
+          </Nav.Item>
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -1,3 +1,4 @@
+import { purchaseProduct } from "helpers/QueryMaker";
 import { getProductsListRequest } from "helpers/QueryMaker";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -12,12 +13,18 @@ import {
     NavLink,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { emptyCard } from "redux/slices/cardSlice";
 import { deleteCardItem } from "redux/slices/cardSlice";
 
 function CardItems() {
+    const history = useHistory();
     const currentUser = useSelector((state) => state.user)
     const cardItems = useSelector((state) => state.card.cardItems[currentUser.user.id])
     const dispatch = useDispatch()
+    const total = cardItems.reduce((accumulator, item) => {
+        return accumulator + (item.price * item.quantity);
+    }, 0);
 
     const deleteUserItem = (id) => {
         dispatch(deleteCardItem({
@@ -26,7 +33,15 @@ function CardItems() {
         }))
     }
     const purchase = () => {
-
+        const listProduct = cardItems.map((item) => { return { id: item.id, quantity: item.quantity } })
+        purchaseProduct((data) => {
+            console.log(data)
+            if (data.status) {
+                alert("purchase done")
+                dispatch(emptyCard({ userId: currentUser.user.id, }))
+                history.push("/admin/purchase-invoice/" + data?.data?.lot)
+            }
+        }, { data: listProduct }, currentUser.token)
     }
     return (
         <>
@@ -37,15 +52,15 @@ function CardItems() {
                             <Card.Header>
                                 <Card.Title as="h4"> <i className="fa fa-shopping-cart mr-2"> </i>  Card Items</Card.Title>
                                 <div className="row">
-                                                <div className="col-8 p-4">
-                                                   <p><strong>Purchase: 4545555 $</strong></p>
-                                                </div>
+                                    <div className="col-8 p-4">
+                                        <p><strong>Purchase: {total} $</strong></p>
+                                    </div>
 
-                                                <div className="col-3 m-2">
-                                                    <button type="button" onClick={()=> purchase()} > Purchase</button>
-                                                </div>
+                                    <div className="col-3 m-2">
+                                        <button type="button" disabled={!cardItems?.length}  onClick={() => purchase()} > Purchase</button>
+                                    </div>
 
-                                            </div>
+                                </div>
                             </Card.Header>
                             <Card.Body className="table-full-width table-responsive px-0">
                                 <Table className="table-hover table-striped">

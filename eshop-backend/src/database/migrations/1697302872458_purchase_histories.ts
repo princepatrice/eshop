@@ -16,7 +16,7 @@ export default class extends BaseSchema {
     table.datetime('purchase_date')
     table.datetime('estimated_delivery_date')
     table.decimal('total_price', 10, 2)
-    table.string('tracking_number', 100).unique()
+    table.string('tracking_number', 100)
     table
       .integer('manufacturer_id')
       .unsigned()

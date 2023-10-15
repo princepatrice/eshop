@@ -33,6 +33,7 @@ Route.group(() => {
     Route.group(() => {
       Route.group(() => {
         Route.get('my/purchase-history', 'PurchaseHistoriesController.getMyPurchaseHistory');
+        Route.get('my/purchase-history-lot', 'PurchaseHistoriesController.getMyPurchaseHistoryByLot');
         Route.post('my/purchase', 'PurchaseHistoriesController.purchase');
         Route.get('me', 'AuthController.user')
         Route.post('user/update', 'UsersController.updateInfo')

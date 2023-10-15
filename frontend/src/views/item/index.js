@@ -29,6 +29,7 @@ function ProductInfo() {
             quantity: nbProduct
         }))
         alert("the product have been added to the cart")
+        setNbProduct(1)
     }
 
     useEffect(() => {

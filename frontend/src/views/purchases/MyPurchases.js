@@ -83,6 +83,7 @@ function MyPurchases() {
                       <th className="border-0">Qt</th>
                       <th className="border-0">Total</th>
                       <th className="border-0">Tracking#</th>
+                      <th className="border-0">Lot#</th>
                       <th className="border-0">Date</th>
 
                       <th className="border-0">Action</th>
@@ -96,9 +97,9 @@ function MyPurchases() {
                         <td>{purchaseItem?.item_price} $</td>
                         <td>{purchaseItem?.quantity} </td>
                         <td>{purchaseItem?.quantity*purchaseItem?.item_price}$</td>
-                        <td>{purchaseItem?.quantity*purchaseItem?.item_price}$</td>
-                        <td>{purchaseItem?.purchaseHistory.tracking_number}$</td>
-                        <td>{purchaseItem?.purchaseHistory.purchase_date}$</td>
+                        <td>{purchaseItem?.purchaseHistory.tracking_number}</td>
+                        <td>{purchaseItem?.purchaseHistory.purchase_lot}</td>
+                        <td>{purchaseItem?.purchaseHistory.purchase_date}</td>
                         <td><NavLink href={`/admin/product/${purchaseItem?.item_id}`}><i className="fa fa-eye"></i></NavLink></td>
                       </tr>
                     )}

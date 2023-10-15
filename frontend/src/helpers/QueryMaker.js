@@ -23,6 +23,21 @@ export const updateMyInformation = (callback,data,token) => {
     fetchData(url, requestParam, callback)
 }
 
+
+export const purchaseProduct = (callback,data,token) => {
+    const url = process.env.REACT_APP_API_URL + "auth/my/purchase"
+    const requestParam = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+token
+        },
+        body: JSON.stringify(data),
+    }
+    fetchData(url, requestParam, callback)
+}
+
+
 export const getUserListRequest = (callback, token, page=1, search="") => {
     const url = process.env.REACT_APP_API_URL + "users?page="+page+"&search="+search
     const requestParam = {
@@ -71,6 +86,18 @@ export const getPurchaseListRequest = (callback, token, userId, page=1, search="
 }
 export const getMyPurchaseListRequest = (callback, token, page=1, search="") => {
     const url = process.env.REACT_APP_API_URL + "auth/my/purchase-history?page="+page+"&search="+search
+    const requestParam = {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+token
+        }
+    }
+    fetchData(url, requestParam, callback)
+}
+
+export const getMyPurchaseListByLotRequest = (callback, token, page=1, search="") => {
+    const url = process.env.REACT_APP_API_URL + "auth/my/purchase-history-lot?page="+page+"&search="+search
     const requestParam = {
         method: "GET",
         headers: {
