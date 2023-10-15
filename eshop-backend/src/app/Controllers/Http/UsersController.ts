@@ -5,7 +5,7 @@ import UpdateUserRequestValidator from 'App/Validators/UpdateUserRequestValidato
 
 export default class UsersController {
   public async index({ request }: HttpContextContract) {
-    const { page, search } = request.get();
+    const { page, search } = request.qs();
     const pageValue = page || 1;
     const searchValue = search || "";
     const perPage = 100;

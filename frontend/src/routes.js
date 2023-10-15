@@ -16,9 +16,6 @@
 
 */
 import UserProfile from "views/UserProfile.js";
-import TableList from "views/TableList.js";
-import Icons from "views/Icons.js";
-import Notifications from "views/Notifications.js";
 import ProductsList from "views/ProductList";
 import ProductInfo from "views/item";
 import MyPurchases from "views/purchases/MyPurchases";

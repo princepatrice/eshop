@@ -15,15 +15,18 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserData } from "redux/slices/userSlice";
+import { useToasts } from 'react-toast-notifications';
 
 function User() {
   const currentUser = useSelector((state) => state.user)
   const [userInfo, setUserInfo] = useState(currentUser.user)
   const dispatch = useDispatch()
+  const { addToast } = useToasts();
   const updateUserInfo = (e) => {
     e.preventDefault()
     updateMyInformation((data) => {
       dispatch(updateUserData(data.data))
+      addToast("User information updated successfully", { appearance: 'success' });
     }, userInfo, currentUser.token)
   }
   return (

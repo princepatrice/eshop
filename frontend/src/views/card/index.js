@@ -16,30 +16,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { emptyCard } from "redux/slices/cardSlice";
 import { deleteCardItem } from "redux/slices/cardSlice";
+import { useToasts } from 'react-toast-notifications';
 
 function CardItems() {
     const history = useHistory();
     const currentUser = useSelector((state) => state.user)
-    const cardItems = useSelector((state) => state.card.cardItems[currentUser.user.id])
+    const cardItems = useSelector((state) => state.card.cardItems[currentUser?.user?.id])
     const dispatch = useDispatch()
-    const total = cardItems.reduce((accumulator, item) => {
+    const { addToast } = useToasts();
+
+    const total = cardItems?.reduce((accumulator, item) => {
         return accumulator + (item.price * item.quantity);
     }, 0);
 
     const deleteUserItem = (id) => {
         dispatch(deleteCardItem({
-            userId: currentUser.user.id,
+            userId: currentUser?.user?.id,
             id: id
         }))
     }
     const purchase = () => {
-        const listProduct = cardItems.map((item) => { return { id: item.id, quantity: item.quantity } })
+        const listProduct = cardItems?.map((item) => { return { id: item.id, quantity: item.quantity } })
         purchaseProduct((data) => {
             console.log(data)
             if (data.status) {
-                alert("purchase done")
-                dispatch(emptyCard({ userId: currentUser.user.id, }))
-                history.push("/admin/purchase-invoice/" + data?.data?.lot)
+                dispatch(emptyCard({ userId: currentUser?.user?.id, }))
+                addToast("Purchase Done, you will be redirect soon", { appearance: 'success' });
+                setTimeout(() => {
+                    history.push("/admin/purchase-invoice/" + data?.data?.lot)
+                }, 500)
             }
         }, { data: listProduct }, currentUser.token)
     }
@@ -57,7 +62,7 @@ function CardItems() {
                                     </div>
 
                                     <div className="col-3 m-2">
-                                        <button type="button" disabled={!cardItems?.length}  onClick={() => purchase()} > Purchase</button>
+                                        <button type="button" disabled={!cardItems?.length} onClick={() => purchase()} > Purchase</button>
                                     </div>
 
                                 </div>

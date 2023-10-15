@@ -107,7 +107,7 @@ export default class PurchaseHistoriesController {
 
   }
   public async userPurchaseHistory({ params, request }: HttpContextContract) {
-    let { page, search } = request.get();
+    let { page, search } = request.qs();
     const pageValue = page ?? 1
     const perPage = 20
     const userId = params.id
@@ -117,7 +117,7 @@ export default class PurchaseHistoriesController {
   public async getMyPurchaseHistory({ auth, request }: HttpContextContract) {
     await auth.use('api').authenticate()
     const user = auth.user
-    let { page, search } = request.get();
+    let { page, search } = request.qs();
     const pageValue = page ?? 1
     const perPage = 20
     const userId = user?.id
@@ -127,7 +127,7 @@ export default class PurchaseHistoriesController {
   public async getMyPurchaseHistoryByLot({ auth, request }: HttpContextContract) {
     await auth.use('api').authenticate()
     const user = auth.user
-    let { page, search } = request.get();
+    let { page, search } = request.qs();
     const pageValue = page ?? 1
     const perPage = 20
     const userId = user?.id

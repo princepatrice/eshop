@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
 
@@ -29,7 +29,7 @@ function Header() {
   const dispatch = useDispatch()
   const location = useLocation();
   const currentUser = useSelector((state) => state.user.user)
-  const cardItems = useSelector((state) => state.card.cardItems[currentUser.id])
+  const cardItems = useSelector((state) => state.card.cardItems[currentUser?.id])
   const logoutAction = () => {
     dispatch(logout())
     history.push("/login");
@@ -54,6 +54,12 @@ function Header() {
     }
     return "Brand";
   };
+
+  useEffect(()=>{
+    if(!currentUser){
+      history.push("/login")
+    }
+  },[currentUser])
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
@@ -87,7 +93,7 @@ function Header() {
             <Nav.Item>
               <span className="d-lg-block p-3">{currentUser?.first_name} {currentUser?.last_name}</span>
             </Nav.Item>
-            <Nav.Item>
+            {!currentUser?.is_admin? <Nav.Item>
               <Dropdown as={Nav.Item}>
                 <Dropdown.Toggle
                   as={Nav.Link}
@@ -98,12 +104,12 @@ function Header() {
                   onClick={()=> history.push("/admin/cart")}
                 >
                   <i className="nc-icon nc-bag"></i>
-                  {cardItems.length ? <span className="notification">{cardItems.length}</span>:''}
+                  {cardItems?.length ? <span className="notification">{cardItems?.length}</span>:''}
                   <span className="d-lg-none ml-1">Cart</span>
                 </Dropdown.Toggle>
 
               </Dropdown>
-            </Nav.Item>
+            </Nav.Item>:''}
           </Nav>
           <Nav.Item>
             <Nav.Link

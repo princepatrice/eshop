@@ -1,6 +1,7 @@
-// import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from "App/Models/User"
 import Hash from '@ioc:Adonis/Core/Hash'
+import CreateUserRequestValidator from "App/Validators/CreateUserRequestValidator"
 
 export default class AuthController {
 
@@ -12,20 +13,20 @@ export default class AuthController {
     const user = await User.query()
       .where('email', email)
       .first()
-      
-      /*if (!user || !(await Hash.verify(user.password, password))) {
-        return response.unauthorized('Invalid credentials')
-      }*/
-      if(user){
-        const token = await auth.use('api').generate(user)
-        return {
-          token: token.token,
-          user
-        }
-      }else{
-        return response.unauthorized('Email or password incorrect')
+
+    /*if (!user || !(await Hash.verify(user.password, password))) {
+      return response.unauthorized('Invalid credentials')
+    }*/
+    if (user) {
+      const token = await auth.use('api').generate(user)
+      return {
+        token: token.token,
+        user
       }
-     
+    } else {
+      return response.unauthorized('Email or password incorrect')
+    }
+
 
 
   }
@@ -42,24 +43,40 @@ export default class AuthController {
       .where('email', email)
       .where('isAdmin', false)
       .first()
-      
-      /*if (!user || !(await Hash.verify(user.password, password))) {
-        return response.unauthorized('Invalid credentials')
-      }*/
-      if(user){
-        const token = await auth.use('api').generate(user)
-        return {
-          token: token.token,
-          user
-        }
-      }else{
-        return response.unauthorized('Email or password incorrect')
+
+    /*if (!user || !(await Hash.verify(user.password, password))) {
+      return response.unauthorized('Invalid credentials')
+    }*/
+    if (user) {
+      const token = await auth.use('api').generate(user)
+      return {
+        token: token.token,
+        user
       }
+    } else {
+      return response.unauthorized('Email or password incorrect')
+    }
 
 
   }
 
 
+  public async register({ auth, request, response }: HttpContextContract) {
+
+    try {
+      const data = await request.validate(CreateUserRequestValidator)
+      const user = new User().fill(data)
+      const userInfo = await user.save();
+      const token = await auth.use('api').generate(userInfo)
+      return {
+        token: token.token,
+        user
+      }
+    } catch (error) {
+      console.log(error.messages.errors)
+      return response.unauthorized('The Account Already Exists')
+    }
+  }
 
 
 

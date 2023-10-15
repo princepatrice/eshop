@@ -102,8 +102,8 @@ function UserPurchases() {
                         <td>{purchaseItem?.item_price} $</td>
                         <td>{purchaseItem?.quantity} </td>
                         <td>{purchaseItem?.quantity*purchaseItem?.item_price}$</td>
-                        <td>{purchaseItem?.purchaseHistory.tracking_number}$</td>
-                        <td>{purchaseItem?.purchaseHistory.purchase_date}$</td>
+                        <td>{purchaseItem?.purchaseHistory?.tracking_number}$</td>
+                        <td>{purchaseItem?.purchaseHistory?.purchase_date}$</td>
                         <td><NavLink href={`/admin/product/${purchaseItem?.item_id}`}><i className="fa fa-eye"></i></NavLink></td>
                       </tr>
                     )}

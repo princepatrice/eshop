@@ -10,6 +10,18 @@ export const loginRequest = (data,callback) => {
     fetchData(url, requestParam, callback)
 }
 
+export const registerRequest = (data,callback) => {
+    const url = process.env.REACT_APP_API_URL + "auth/register"
+    const requestParam = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    }
+    fetchData(url, requestParam, callback)
+}
+
 export const updateMyInformation = (callback,data,token) => {
     const url = process.env.REACT_APP_API_URL + "auth/user/update"
     const requestParam = {

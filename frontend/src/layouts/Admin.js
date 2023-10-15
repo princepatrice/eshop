@@ -35,8 +35,8 @@ function Admin() {
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
-  const currentUser = useSelector((state)=> state.user.user)
-const selectedRoutes = currentUser?.is_admin?adminRoutes:routes
+  const currentUser = useSelector((state) => state.user.user)
+  const selectedRoutes = currentUser?.is_admin ? adminRoutes : routes
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
@@ -71,7 +71,7 @@ const selectedRoutes = currentUser?.is_admin?adminRoutes:routes
         <Sidebar color={color} image={hasImage ? image : ""} routes={selectedRoutes} />
         <div className="main-panel" ref={mainPanel}>
           <AdminNavbar />
-          <div className="content"> 
+          <div className="content">
             <Switch>{getRoutes(selectedRoutes)}</Switch>
           </div>
           <Footer />

@@ -5,7 +5,7 @@ import UpdateItemRequestValidator from 'App/Validators/UpdateItemRequestValidato
 
 export default class ItemsController {
   public async index({request}: HttpContextContract) {
-    let { page, search } = request.get();
+    let { page, search } = request.qs();
     const pageValue = page??1
     const searchValue= search??1
     const perPage=20

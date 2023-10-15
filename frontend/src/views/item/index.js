@@ -14,21 +14,25 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import { addCardItem } from "redux/slices/cardSlice";
+import { useToasts  } from 'react-toast-notifications';
 
 function ProductInfo() {
     const currentUser = useSelector((state) => state.user.user)
     const { id } = useParams();
+    const { addToast } = useToasts();
     const [productInfo, setProductInfo] = useState(null)
     const [nbProduct, setNbProduct] = useState(1)
     const dispatch = useDispatch()
+    
+    
 
     const addProduct = () =>{
         dispatch(addCardItem({
-            userId:currentUser.id,
+            userId:currentUser?.id,
             data: productInfo,
             quantity: nbProduct
         }))
-        alert("the product have been added to the cart")
+        addToast("The product have been added to the cart", { appearance: 'success' });
         setNbProduct(1)
     }
 
