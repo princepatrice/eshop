@@ -28,7 +28,8 @@ function Header() {
   const history = useHistory();
   const dispatch = useDispatch()
   const location = useLocation();
-  const currentUser = useSelector((state) => state.user.user)
+  const userState = useSelector((state) => state.user)
+  const currentUser = userState.user
   const cardItems = useSelector((state) => state.card.cardItems[currentUser?.id])
   const logoutAction = () => {
     dispatch(logout())
@@ -56,10 +57,10 @@ function Header() {
   };
 
   useEffect(()=>{
-    if(!currentUser){
+    if(!userState.token){
       history.push("/login")
     }
-  },[currentUser])
+  },[userState.token])
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
